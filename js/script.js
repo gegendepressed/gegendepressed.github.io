@@ -47,7 +47,7 @@ async function validateForm() {
   let finalstring = name+"\n"+email+"\n"+message;
   
   console.log(finalstring);
-  const response = await fetch('https://pingme.tabcat.live/api/sendmessage', {
+  const response = await fetch('https://pingme.developer.li/api/sendmessage', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
