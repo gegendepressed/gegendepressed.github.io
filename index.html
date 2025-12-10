@@ -1,153 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sairaj Pai - Portfolio</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  </head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sairaj Pai</title>
+  <link rel="icon" type="image/x-icon" href="old/v2/images/favicon.png" />
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand navbar-dark" href="#"><img src="images/favicon.png" style="width: 80px; height: auto; padding: right 10px;"> Sairaj Pai's Portfolio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-3 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#contact">Contact</a>
-                  </li>
-                </ul>
-            </div>
+  <header class="sp-header">
+    <nav class="navbar navbar-expand-md navbar-dark sp-navbar fixed-top">
+      <div class="container-fluid px-3 px-md-4">
+        <a class="navbar-brand" href="#top">Sairaj Pai</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#work">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
         </div>
+      </div>
     </nav>
-    
-    <div class="container mt-5 pt-5">
-        <div class="d-flex align-items-center">
-            <img class="profile me-3" src="images/profile.jpeg" alt="Profile">
-            <div class="typing-container">
-                I am <span class="typed-text"></span> 
-                <span class="cursor"></span>
-            </div>
+
+    <section id="top" class="sp-hero container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-md-6 text-center text-md-start">
+          <p class="sp-eyebrow">portfolio / logbook</p>
+          <h1 class="sp-hero-title">Hi, I'm Sairaj.</h1>
+          <p class="sp-hero-subtitle">
+            I write code, play tabla, and occasionally disappear into sci‑fi novels and long sitcom re‑runs.
+          </p>
+          <p class="sp-hero-rotator">
+            <span class="sp-hero-label">Currently toggling between</span>
+            <span class="sp-hero-chip" id="identity-rotator">developer</span>
+          </p>
+          <div class="sp-hero-actions">
+            <a href="#work" class="btn btn-primary btn-lg">See what I've built</a>
+            <a href="#contact" class="btn btn-outline-light btn-lg">Say hello</a>
+          </div>
         </div>
-    </div>
-
-    <div class="aboutme-container">
-        <div data-aos="zoom-in" class="aboutme"> About Me</div>
-        <div class="visitcounter">
-					<span class="visitcounter-label">View Count </span>
-					<span class="visitcounter-count" id="visitcount">0</span>
-				</div>
-        <div class="description">
-            I'm a multifaceted individual with a deep passion for tabla, sci-fi novels, sitcoms, and movies. Whether I'm lost in the rhythmic beats of the tabla, exploring captivating futuristic worlds in books, indulging in the humor of sitcoms, or dissecting the intricacies of cinema, I thrive on diverse experiences. Recently, I've also begun delving into coding, finding it both challenging and rewarding. Constantly seeking to broaden my horizons, I embrace new opportunities for exploration and discovery across various interests and disciplines. 
+        <div class="col-12 col-md-5 offset-md-1">
+          <div class="sp-portrait-card">
+            <div class="sp-portrait"></div>
+            <p class="sp-portrait-note">
+              Built without React or fancy frameworks. Just HTML, CSS, JS and a slightly stubborn curiosity.
+            </p>
+          </div>
         </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section id="about" class="sp-section sp-section-alt">
+      <div class="container">
+        <div class="row g-4 align-items-start">
+          <div class="col-12 col-lg-7">
+            <h2 class="sp-section-title">About</h2>
+            <p>
+              I’m a developer who likes building small things that are actually used: a social app that escaped its
+              college‑project origins, a Reddit joke fetcher that friends quietly rely on, and a finance tracker that
+              tries to make money feel a bit less abstract.
+            </p>
+            <p>
+              When I’m not glued to a screen, I’m usually with my tabla, reading sci‑fi, or dissecting a sitcom episode
+              like it’s a technical document. I enjoy systems that feel human: clear, fast, and a little opinionated.
+            </p>
+            <p>
+              This site is a snapshot of that mix – not a "developer template", just a place to put things I care
+              about.
+            </p>
+          </div>
+          <div class="col-12 col-lg-5">
+            <div class="sp-facts-card">
+              <h3 class="sp-facts-title">Quick notes</h3>
+              <ul class="sp-facts-list">
+                <li><span>Languages / Tools</span><span>Python, JS, Flask, FastAPI, MERN</span></li>
+                <li><span>Comfort zone</span><span>code, tabla, books</span></li>
+                <li><span>Personality</span><span>detail‑oriented and focused</span></li>
+                <li><span>Ideal project</span><span>the one that finishes</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="sp-section">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h2 class="sp-section-title mb-0">Projects</h2>
+          <span class="sp-section-tag">Solo work and group builds I actually care about</span>
+        </div>
+
+        <div class="sp-project-toggle mb-3">
+          <button type="button" class="sp-toggle-btn sp-toggle-btn--active" data-target="solo">Solo projects</button>
+          <button type="button" class="sp-toggle-btn" data-target="group">Group projects</button>
+        </div>
+
+        <div class="sp-project-slider">
+          <div id="projects-solo" class="sp-project-group sp-project-group--active">
+            <div class="row g-4">
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--subtle sp-project-card--clickable" data-project-id="this-site">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">This site</h3>
+                    <span class="sp-status-pill sp-status-pill--ongoing">Ongoing</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Hand-rolled portfolio that I keep tuning instead of rewriting from scratch every few months.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="english-vocab">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">English Vocab Builder</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Quiz-based mobile app for building vocabulary with YAML-backed question sets.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="filelinker">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">Filelinker</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Secure file-sharing platform tuned for speed and convenience.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="redditapi">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">RedditAPI</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Backend API that powers a small Reddit joke fetcher.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="diary">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">Diary</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Encrypted CLI diary built mostly as an excuse to play with GnuPG.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div id="projects-group" class="sp-project-group">
+            <div class="row g-4">
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="readnexus">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">ReadNexus</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Book recommendation system built over a large catalogue using semantic search and collaborative
+                    filtering.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="exposehost">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">ExposeHost</h3>
+                    <span class="sp-status-pill sp-status-pill--ongoing">Ongoing</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Coming soon.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="smartspend">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">SmartSpend</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Group-built personal finance manager with a MERN stack backend and real-time UI.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <article class="sp-project-card sp-project-card--clickable" data-project-id="openmedia">
+                  <header class="sp-project-header">
+                    <h3 class="sp-project-title">Openmedia</h3>
+                    <span class="sp-status-pill sp-status-pill--finished">Finished</span>
+                  </header>
+                  <p class="sp-project-body">
+                    Media management and social app that started in college and refused to stay a toy.
+                  </p>
+                  <button type="button" class="sp-project-open">View details</button>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="sp-section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-12 col-lg-6">
+            <h2 class="sp-section-title">Contact</h2>
+            <p>
+              Reach out if you want to talk about a project, an idea, a bug, or a weird sci‑fi recommendation. I do
+              read these.
+            </p>
+            <p class="sp-contact-resume">
+              Want me to work with you? Here's my <a href="assets/Sairaj_Pai-Resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>.
+            </p>
+            <ul class="sp-contact-list">
+              <li><span>Email</span><a href="mailto:sairaj09pai@gmail.com">sairaj09pai@gmail.com</a></li>
+              <li><span>GitHub</span><a href="https://github.com/gegendepressed" target="_blank" rel="noopener noreferrer">@gegendepressed</a></li>
+              <li><span>Telegram</span><a href="https://t.me/relativesciencx" target="_blank" rel="noopener noreferrer">@relativesciencx</a></li>
+              <li><span>Reddit</span><a href="https://reddit.com/u/thetablaplayer" target="_blank" rel="noopener noreferrer">u/thetablaplayer</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="sp-form-card">
+              <h3 class="sp-form-title">Send a message</h3>
+              <form id="contact-form" novalidate>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" id="name" name="name" class="form-control" placeholder="Who’s saying hi?" required />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="So I can reply." />
+                </div>
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea id="message" name="message" rows="4" class="form-control" placeholder="Short is fine, honest is better." required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="file" class="form-label">Attach a file (optional)</label>
+                  <input type="file" id="file" name="file" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="contact-submit">Send</button>
+                <p class="sp-form-status" id="form-status" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="sp-modal-backdrop" id="project-modal" hidden>
+    <div class="sp-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+      <button type="button" class="sp-modal-close" id="project-modal-close" aria-label="Close project details">×</button>
+      <header class="sp-modal-header">
+        <h2 id="project-modal-title" class="sp-modal-title"></h2>
+        <span id="project-modal-status" class="sp-status-pill"></span>
+      </header>
+      <div class="sp-modal-main">
+        <div class="sp-modal-info">
+          <p id="project-modal-period" class="sp-modal-period"></p>
+          <p id="project-modal-tech" class="sp-modal-tech"></p>
+          <ul id="project-modal-points" class="sp-modal-list"></ul>
+          <div class="sp-modal-actions">
+            <a id="project-modal-live" class="btn btn-sm btn-primary" href="#" target="_blank" rel="noopener noreferrer" hidden>Open live app</a>
+            <a id="project-modal-code" class="btn btn-sm btn-outline-light" href="#" target="_blank" rel="noopener noreferrer" hidden>View code</a>
+            <a id="project-modal-extra" class="btn btn-sm btn-outline-light" href="#" target="_blank" rel="noopener noreferrer" hidden>Project page</a>
+          </div>
+        </div>
+        <div id="project-modal-frame-wrapper" class="sp-modal-frame-wrapper" hidden>
+          <iframe id="project-modal-frame" title="Project preview" loading="lazy"></iframe>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="projects-container" id="projects">
-        <div data-aos="fade-up" class="projects-title"> Projects </div>
-        <div data-aos="fade-up" class="card text-white bg-dark mb-3">
-            <img src="images/openmedia.png" class="card-img-top cardimage" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Openmedia - A Social Media Web App</h5>
-              <p class="card-text">Developed originally as a college project, it has been scaled according to the requirements of a generic social media app. Built using Flask and Html.</p>
-              <a href="https://openmedia-e0gvb8fzbnexafd8.centralus-01.azurewebsites.net/" class="btn btn-primary stretched-link">Openmedia</a>
-            </div>
-          </div>
-
-          <div data-aos="fade-up" class="card text-white bg-dark mb-3">
-            <img src="images/redditfetcher.png" class="card-img-top cardimage" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Reddit Fetcher - Fetch Posts Away !</h5>
-              <p class="card-text"> This FastAPI application connects to Reddit using the PRAW library to fetch random, hot and top posts from a specified subreddit. It returns the title, description, URL and date of a post and also has a copying functionality. It's a great way to get jokes and send to your friends!</p>
-              <a href="https://sairaj.tabcat.live/redditapi.html" class="btn btn-primary stretched-link"> Reddit Fetcher</a>
-            </div>
-          </div>
-
-          <div data-aos="fade-up" class="card text-white bg-dark mb-3">
-            <img src="images/smartspend1.png" class="card-img-top cardimage" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">SmartSpend - Personal Finance Manager</h5>
-              <p class="card-text">SmartSpend is a comprehensive personal finance planner built using the MERN stack (MongoDB, Express, React, and Node.js). It enables users to manage their financial activities, including investments, expenses, transactions, loans, and EMIs, through a secure and intuitive interface.</p>
-              <a href="https://smartspend-h6cxb0dng5ardeef.centralindia-01.azurewebsites.net/" class="btn btn-primary stretched-link"> SmartSpend </a>
-            </div>
-          </div>
-
-          <div data-aos="fade-up" class="card text-white bg-dark mb-3">
-            <img src="images/websitepic.png" class="card-img-top cardimage" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">This Portfolio Website</h5>
-              <p class="card-text">Well, isn't it nice ?</p>
-              <a href="https://sairaj.tabcat.live" class="btn btn-primary stretched-link"> THIS WEBSITE.</a>   
-            </div>
-          </div>
-
+  <footer class="sp-footer">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+      <p class="mb-0 sp-footer-text" id="footer-quote"></p>
+      <div class="sp-footer-links">
+        <a href="https://frost2k5.is-a.dev" target="_blank" rel="noopener noreferrer">Friend's site</a>
+        <a href="/old/v2/index.html" target="_blank" rel="noopener noreferrer">Previous version</a>
+      </div>
     </div>
+  </footer>
 
-    <div class="contents-container text-white " id="contact">
-        <div class="contents-title" data-aos="zoom-in"> Contact </div>
-        <form name="myForm" onsubmit="validateForm(); return false">
-        <div class="form-row">
-          <div class="col-auto text-start">
-            <label for="validationDefault01">Name</label>
-            <input type="text" class="form-control text-start" id="name" placeholder="Enter your name here!"required>
-          </div>
-          <div class="col-auto text-start">
-            <label for="validationDefault02">Email</label>
-            <input type="email" class="form-control text-start" id="email" placeholder="Asking for mails in 2024 ? Yeah, I know.">
-          </div>
-          </div>
-          <div class="form-group text-start">
-            <label for="exampleFormControlInput1">Message</label>
-            <input type="text" class="form-control text-start" id="message" placeholder="Send me your thoughts and prayers."required>
-          </div>
-          <div class="form-group text-start">
-            <label for="file"> Attach a File </label>
-            <input type="file" class="form-control text-start" id="filename" name="filename" placeholder="Send me any documents to review!">
-          </div>
-          <br>
-          <input class="submitbutton btn btn-primary btn-lg btn-block" type="submit" value="Submit">
-        </form>
-    </div>
-
-        <footer class="socialmedia-tray">
-          <div class="website-mention">
-            <a href="https://frost2k5.is-a.dev"> Check out my friend's website as well !</a>
-          </div>
-          <div class="socialmedia-icons">
-            <a href="https://t.me/relativesciencx">
-              <img src="images/teleicon.svg" alt="Telegram">
-            </a>
-            <a href="https://instagram.com/the.tablaplayer" target="_blank" rel="noopener noreferrer">
-              <img src="images/instaicon.svg" alt="Instagram">
-            </a>
-            <a href="https://github.com/gegendepressed" target="_blank" rel="noopener noreferrer">
-              <img src="images/giticon.svg" alt="GitHub">
-            </a>
-            <a href="mailto:sairaj09pai@gmail.com">
-              <img src="images/mailicon.svg" alt="Email">
-            </a>
-            <a href="https://reddit.com/u/thetablaplayer" target="_blank" rel="noopener noreferrer">
-              <img src="images/redditicon.svg" alt="Reddit">
-            </a>
-          </div>
-
-        </footer>
-        
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <script>
-        AOS.init();
-      </script>
-    <script src="js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="js/main.js"></script>
+</body>
 </html>
