@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>OTP AutoFill Testbed — Sairaj Pai</title>
+  <link rel="icon" type="image/x-icon" href="old/v2/images/favicon.png" />
+
+  <!-- Fonts & Bootstrap 5.3 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    :root {
+      --sp-accent: #4f80ff;
+      --sp-accent-glow: rgba(79, 128, 255, 0.35);
+      --sp-card-bg: rgba(14, 23, 49, 0.88);
+      --sp-card-border: rgba(255, 255, 255, 0.12);
+      --sp-box-border: rgba(255, 255, 255, 0.18);
+      --sp-box-focus: #5b92ff;
+      --sp-success: #10b981;
+    }
+
+    body {
+      background: #040814;
+      color: #f6f7fb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .otp-page-wrapper {
+      background: radial-gradient(circle at 50% 10%, #152758 0%, #040814 60%, #020308 100%);
+      flex: 1;
+      padding-top: 100px;
+      padding-bottom: 60px;
+    }
+
+    .otp-card {
+      background: var(--sp-card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--sp-card-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(79, 128, 255, 0.12);
+    }
+
+    .badge-domain {
+      background: rgba(79, 128, 255, 0.15);
+      color: #8bb2ff;
+      border: 1px solid rgba(79, 128, 255, 0.3);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Tabs */
+    .nav-pills-custom .nav-link {
+      color: #9aa4d9;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      padding: 10px 18px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pills-custom .nav-link.active {
+      background: var(--sp-accent);
+      color: #fff;
+      border-color: var(--sp-accent);
+      box-shadow: 0 4px 15px var(--sp-accent-glow);
+    }
+
+    /* Single Input */
+    .otp-single-input {
+      background: rgba(4, 8, 20, 0.7);
+      border: 2px solid var(--sp-box-border);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      letter-spacing: 0.5em;
+      text-align: center;
+      padding: 14px 20px;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      transition: all 0.25s ease;
+    }
+
+    .otp-single-input:focus {
+      outline: none;
+      border-color: var(--sp-box-focus);
+      box-shadow: 0 0 20px var(--sp-accent-glow);
+      background: rgba(6, 12, 32, 0.9);
+      color: #fff;
+    }
+
+    /* 6-box Segmented Inputs */
+    .otp-box-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .otp-box {
+      width: 54px;
+      height: 64px;
+      background: rgba(4, 8, 20, 0.7);
+      border: 2px solid var(--sp-box-border);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      caret-color: var(--sp-accent);
+    }
+
+    .otp-box:focus {
+      outline: none;
+      border-color: var(--sp-box-focus);
+      box-shadow: 0 0 16px var(--sp-accent-glow);
+      background: rgba(6, 12, 32, 0.95);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 480px) {
+      .otp-box-group {
+        gap: 6px;
+      }
+      .otp-box {
+        width: 44px;
+        height: 54px;
+        font-size: 1.5rem;
+      }
+      .otp-card {
+        padding: 24px 18px;
+      }
+    }
+
+    /* Event Console / Log */
+    .console-panel {
+      background: #02040a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #a5b4fc;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .console-entry {
+      margin-bottom: 4px;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+
+    .console-tag {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+    .tag-autofill { background: #065f46; color: #6ee7b7; }
+    .tag-input { background: #1e3a8a; color: #93c5fd; }
+    .tag-paste { background: #701a75; color: #f472b6; }
+    .tag-focus { background: #374151; color: #d1d5db; }
+    .tag-success { background: #14532d; color: #86efac; }
+
+    /* Accordion / Cheat Sheet */
+    .accordion-custom .accordion-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .accordion-custom .accordion-button {
+      background: rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 0.92rem;
+      box-shadow: none !important;
+    }
+
+    .accordion-custom .accordion-button:not(.collapsed) {
+      background: rgba(79, 128, 255, 0.15);
+      color: #8bb2ff;
+    }
+
+    .code-preview {
+      background: #02040a;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      position: relative;
+    }
+
+    .btn-copy-code {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 0.72rem;
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Nav -->
+  <nav class="navbar navbar-expand navbar-dark sp-navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <span>&larr;</span> Sairaj Pai
+      </a>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <span class="badge-domain d-none d-sm-inline-flex">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H9v2.5a.5.5 0 0 1-1 0V8.5H5.5a.5.5 0 0 1 0-1H8V5a.5.5 0 0 1 1 0v2.5h2.5z"/>
+          </svg>
+          sairaj.is-a.dev
+        </span>
+        <a href="index.html" class="btn btn-sm btn-outline-light">Exit Testbed</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="otp-page-wrapper">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 col-xl-7">
+          
+          <!-- Test Card -->
+          <div class="otp-card">
+            
+            <div class="text-center mb-4">
+              <span class="sp-eyebrow d-block mb-1">Apple WebKit Verification</span>
+              <h1 class="h3 fw-bold mb-2">iOS OTP Mail AutoFill Testbed</h1>
+              <p class="text-white-50 small mb-3">
+                Target origin: <code class="text-info">https://sairaj.is-a.dev/</code><br>
+                Tests iOS Security Code AutoFill from Apple Mail keyboard suggestions.
+              </p>
+
+              <!-- Tabs to switch between Single input and Segmented 6-box input -->
+              <ul class="nav nav-pills nav-pills-custom justify-content-center gap-2 mt-3" id="otpTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="single-tab" data-bs-toggle="pill" data-bs-target="#tab-single" type="button" role="tab" aria-selected="true">
+                    Mode A: Standard Single Input
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="segmented-tab" data-bs-toggle="pill" data-bs-target="#tab-segmented" type="button" role="tab" aria-selected="false">
+                    Mode B: 6-Box Segmented
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content mb-4" id="otpTabContent">
+              
+              <!-- Tab 1: Single Input -->
+              <div class="tab-pane fade show active" id="tab-single" role="tabpanel">
+                <form id="form-single" onsubmit="event.preventDefault(); verifyCode(document.getElementById('otp-single').value, 'Single Input');">
+                  <div class="text-center mb-4">
+                    <label for="otp-single" class="form-label text-white-50 small mb-2 d-block">
+                      Tap inside the box &mdash; iOS QuickType keyboard will display <strong>"From Mail: [code]"</strong>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="otp-single" 
+                      name="one-time-code" 
+                      autocomplete="one-time-code" 
+                      inputmode="numeric" 
+                      pattern="[0-9]*" 
+                      maxlength="6" 
+                      placeholder="······" 
+                      class="otp-single-input"
+                      autofocus
+                    />
+                    <div class="form-text text-white-50 mt-2 small">
+                      Attributes: <code>autocomplete="one-time-code"</code>, <code>inputmode="numeric"</code>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                      Verify Code
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary px-3" onclick="resetForm('single')">
+                      Clear
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Tab 2: Segmented 6-Box Input -->
+              <div class="tab-pane fade" id="tab-segmented" role="tabpanel">
+                <form id="form-segmented" onsubmit="event.preventDefault(); submitSegmented();">
+                  <div class="text-center mb-4">
+                    <label class="form-label text-white-50 small mb-3 d-block">
+                      Box 1 carries <code>autocomplete="one-time-code"</code>. Script will auto-distribute all 6 digits when tapped from keyboard suggestion.
+                    </label>
+
+                    <div class="otp-box-group" id="segmented-container">
+                      <input type="text" class="otp-box" id="box-1" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" placeholder="•" />
+                      <input type="text" class="otp-box" id="box-2" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="•" />
+                      <input type="text" class="otp-box" id="box-3" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="•" />
+                      <input type="text" class="otp-box" id="box-4" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="•" />
+                      <input type="text" class="otp-box" id="box-5" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="•" />
+                      <input type="text" class="otp-box" id="box-6" maxlength="1" inputmode="numeric" pattern="[0-9]*" placeholder="•" />
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                      Verify Code
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary px-3" onclick="resetForm('segmented')">
+                      Clear
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+            <!-- Verification Status Display -->
+            <div id="status-alert" class="alert d-none mb-4 text-center" role="alert"></div>
+
+            <!-- Live Event Telemetry Console -->
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small fw-semibold text-white-50">Live Event Inspector (Autofill Telemetry)</span>
+                <button class="btn btn-link btn-sm text-white-50 text-decoration-none p-0" onclick="clearConsole()">
+                  Clear Log
+                </button>
+              </div>
+              <div class="console-panel" id="event-console">
+                <div class="console-entry text-muted">&gt; Ready. Tap input field on your iOS device to activate keyboard suggestion...</div>
+              </div>
+            </div>
+
+            <!-- Test Simulation Button -->
+            <div class="d-flex justify-content-center gap-2 mt-3">
+              <button class="btn btn-sm btn-outline-info text-opacity-75" onclick="simulateAutofill('849201')">
+                Simulate 6-digit fill (849201)
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ESP Mail Guidelines & Cheat Sheet -->
+          <div class="mt-4">
+            <h2 class="h5 fw-bold text-white mb-3">ESP Email Content Reference</h2>
+            
+            <div class="accordion accordion-custom" id="espAccordion">
+              
+              <!-- Accordion 1: WebKit Domain-Bound Syntax -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    1. Domain-Bound Syntax for Apple WebKit (Must-have at bottom)
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#espAccordion">
+                  <div class="accordion-body text-white-50 small">
+                    <p>Place this exact line at the very bottom of your email text (on its own line). This tells iOS that the OTP belongs strictly to <code>sairaj.is-a.dev</code>:</p>
+                    <div class="code-preview mb-2">
+                      <span id="domain-bound-sample">@sairaj.is-a.dev #123456</span>
+                      <button class="btn btn-sm btn-outline-primary btn-copy-code" onclick="copyText('domain-bound-sample', this)">Copy</button>
+                    </div>
+                    <ul class="mb-0 ps-3">
+                      <li><code>@sairaj.is-a.dev</code> &mdash; specifies the origin that can auto-fill this OTP.</li>
+                      <li><code>#123456</code> &mdash; specifies the one-time code.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accordion 2: Plain Text Template -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    2. Plain-Text (text/plain) Email Body Template
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#espAccordion">
+                  <div class="accordion-body text-white-50 small">
+                    <div class="code-preview mb-2">
+                      <pre id="plain-text-sample" class="m-0" style="white-space: pre-wrap;">Your verification code is 123456.
+
+This code will expire in 10 minutes.
+
+@sairaj.is-a.dev #123456</pre>
+                      <button class="btn btn-sm btn-outline-primary btn-copy-code" onclick="copyText('plain-text-sample', this)">Copy</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accordion 3: HTML Template -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    3. HTML (text/html) Email Body Template
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#espAccordion">
+                  <div class="accordion-body text-white-50 small">
+                    <div class="code-preview mb-2">
+                      <pre id="html-sample" class="m-0" style="white-space: pre-wrap;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Verification Code&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7f9fc; padding: 24px; margin: 0;"&gt;
+  &lt;div style="max-width: 480px; margin: 0 auto; background: #ffffff; border-radius: 10px; padding: 32px; border: 1px solid #e2e8f0;"&gt;
+    &lt;h2 style="color: #0f172a; margin-top: 0; font-size: 20px;"&gt;Security Verification&lt;/h2&gt;
+    &lt;p style="color: #475569; font-size: 15px;"&gt;Your verification code for &lt;strong&gt;sairaj.is-a.dev&lt;/strong&gt; is:&lt;/p&gt;
+    &lt;div style="background: #f1f5f9; border-radius: 8px; padding: 18px; text-align: center; margin: 24px 0;"&gt;
+      &lt;span style="font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #2563eb; font-family: monospace;"&gt;123456&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;p style="color: #64748b; font-size: 13px;"&gt;This code is valid for 10 minutes. Do not share it with anyone.&lt;/p&gt;
+    &lt;hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;"&gt;
+    &lt;!-- Domain-bound code for iOS Safari AutoFill --&gt;
+    &lt;p style="color: #94a3b8; font-size: 12px; margin: 0; font-family: monospace;"&gt;@sairaj.is-a.dev #123456&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                      <button class="btn btn-sm btn-outline-primary btn-copy-code" onclick="copyText('html-sample', this)">Copy</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accordion 4: iOS Testing Prerequisites -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    4. iOS Mail Autofill Checklist &amp; Troubleshooting
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#espAccordion">
+                  <div class="accordion-body text-white-50 small">
+                    <ul class="mb-0 ps-3">
+                      <li class="mb-2"><strong>Native Apple Mail app:</strong> The destination email account must be set up inside Apple's native <em>Mail</em> app on your iPhone/iPad. Third-party apps (Gmail, Outlook apps) cannot pass QuickType suggestions to Safari.</li>
+                      <li class="mb-2"><strong>Primary Inbox required:</strong> If the ESP mail lands in <em>Junk/Spam</em>, iOS security suppresses the autofill suggestion.</li>
+                      <li class="mb-2"><strong>Safari domain match:</strong> Safari URL must match the <code>@sairaj.is-a.dev</code> domain. (If accessing via <code>gegendepressed.github.io</code>, it redirects to <code>sairaj.is-a.dev</code>).</li>
+                      <li class="mb-2"><strong>iOS Settings:</strong> Verify in iOS <em>Settings &gt; Passwords &gt; Password Options</em> (or <em>Settings &gt; General &gt; AutoFill &amp; Passwords</em>) that <strong>AutoFill Passwords and Passkeys</strong> is ON.</li>
+                      <li class="mb-2"><strong>Delete After Use feature:</strong> If iOS is set to "Delete After Use", iOS will automatically delete the OTP email from Mail as soon as you tap the QuickType autofill bar.</li>
+                      <li><strong>Recency:</strong> The email must arrive recently (usually within the last ~10-15 minutes).</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <script>
+    const consoleEl = document.getElementById('event-console');
+    const statusAlert = document.getElementById('status-alert');
+
+    function logEvent(tag, message, tagClass = 'tag-input') {
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+      const entry = document.createElement('div');
+      entry.className = 'console-entry';
+      entry.innerHTML = `<span class="text-white-50">[${timeStr}]</span> <span class="console-tag ${tagClass}">${tag}</span> ${message}`;
+      consoleEl.appendChild(entry);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function clearConsole() {
+      consoleEl.innerHTML = '<div class="console-entry text-muted">&gt; Console cleared. Waiting for interaction...</div>';
+    }
+
+    function showStatus(message, isSuccess = true) {
+      statusAlert.className = `alert alert-${isSuccess ? 'success' : 'danger'} mb-4 text-center fw-semibold`;
+      statusAlert.textContent = message;
+      statusAlert.classList.remove('d-none');
+    }
+
+    function hideStatus() {
+      statusAlert.classList.add('d-none');
+    }
+
+    function verifyCode(val, source) {
+      val = (val || '').trim();
+      logEvent('VERIFY', `Verifying code "${val}" from ${source}`, 'tag-success');
+      if (/^\d{4,8}$/.test(val)) {
+        showStatus(`Code "${val}" successfully received and validated via ${source}!`, true);
+      } else if (!val) {
+        showStatus('Please enter or autofill a verification code first.', false);
+      } else {
+        showStatus(`Received non-standard code "${val}". Expected 4-8 numeric digits.`, false);
+      }
+    }
+
+    function resetForm(type) {
+      hideStatus();
+      if (type === 'single') {
+        const input = document.getElementById('otp-single');
+        input.value = '';
+        input.focus();
+        logEvent('RESET', 'Single input cleared', 'tag-focus');
+      } else {
+        for (let i = 1; i <= 6; i++) {
+          const box = document.getElementById('box-' + i);
+          if (box) box.value = '';
+        }
+        document.getElementById('box-1').focus();
+        logEvent('RESET', 'Segmented boxes cleared', 'tag-focus');
+      }
+    }
+
+    /* Single Input Event Handlers */
+    const singleInput = document.getElementById('otp-single');
+    singleInput.addEventListener('focus', () => {
+      logEvent('FOCUS', 'Single OTP input focused. iOS QuickType keyboard active.', 'tag-focus');
+    });
+
+    singleInput.addEventListener('input', (e) => {
+      const val = singleInput.value;
+      const isAutoFill = (val.length > 1 && e.inputType === 'insertReplacementText') || val.length >= 4;
+      logEvent(
+        isAutoFill ? 'AUTOFILL' : 'INPUT',
+        `Value: "${val}" (Length: ${val.length}, inputType: "${e.inputType || 'none'}")`,
+        isAutoFill ? 'tag-autofill' : 'tag-input'
+      );
+      if (val.length === 6) {
+        verifyCode(val, 'Single Input (Auto-triggered on 6 digits)');
+      }
+    });
+
+    singleInput.addEventListener('paste', (e) => {
+      const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+      logEvent('PASTE', `Pasted raw data: "${pasteData}"`, 'tag-paste');
+    });
+
+    singleInput.addEventListener('change', () => {
+      logEvent('CHANGE', `Value committed: "${singleInput.value}"`, 'tag-input');
+    });
+
+    /* Segmented 6-box Handlers */
+    const boxes = [
+      document.getElementById('box-1'),
+      document.getElementById('box-2'),
+      document.getElementById('box-3'),
+      document.getElementById('box-4'),
+      document.getElementById('box-5'),
+      document.getElementById('box-6')
+    ];
+
+    function getSegmentedValue() {
+      return boxes.map(b => b.value).join('');
+    }
+
+    function fillSegmented(code) {
+      const clean = code.replace(/\D/g, '').slice(0, 6);
+      for (let i = 0; i < 6; i++) {
+        boxes[i].value = clean[i] || '';
+      }
+      const lastIndex = Math.min(clean.length, 5);
+      boxes[lastIndex].focus();
+      return clean;
+    }
+
+    boxes.forEach((box, index) => {
+      box.addEventListener('focus', () => {
+        logEvent('FOCUS', `Segmented Box #${index + 1} focused.`, 'tag-focus');
+      });
+
+      box.addEventListener('input', (e) => {
+        const val = box.value;
+
+        // If user / iOS pasted or autofilled multi-character string into box 1
+        if (val.length > 1) {
+          const distributed = fillSegmented(val);
+          logEvent('AUTOFILL', `Multi-digit detected in Box #${index + 1}: Distributed "${distributed}" across 6 boxes`, 'tag-autofill');
+          if (distributed.length === 6) {
+            verifyCode(distributed, 'Segmented Boxes (Auto-triggered)');
+          }
+          return;
+        }
+
+        logEvent('INPUT', `Box #${index + 1} = "${val}"`, 'tag-input');
+
+        // Normal single character typing: move forward
+        if (val.length === 1 && index < 5) {
+          boxes[index + 1].focus();
+        }
+
+        const fullVal = getSegmentedValue();
+        if (fullVal.length === 6) {
+          verifyCode(fullVal, 'Segmented Boxes');
+        }
+      });
+
+      box.addEventListener('keydown', (e) => {
+        // Backspace handling to navigate backwards
+        if (e.key === 'Backspace' && !box.value && index > 0) {
+          boxes[index - 1].focus();
+        }
+      });
+
+      box.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text').trim();
+        logEvent('PASTE', `Pasted into Box #${index + 1}: "${text}"`, 'tag-paste');
+        const distributed = fillSegmented(text);
+        if (distributed.length === 6) {
+          verifyCode(distributed, 'Segmented Boxes (Paste)');
+        }
+      });
+    });
+
+    function submitSegmented() {
+      verifyCode(getSegmentedValue(), 'Segmented Boxes');
+    }
+
+    /* Simulation helper */
+    function simulateAutofill(sampleCode) {
+      logEvent('SIMULATE', `Simulating autofill injection with "${sampleCode}"...`, 'tag-autofill');
+      const activeTab = document.querySelector('.tab-pane.active').id;
+      if (activeTab === 'tab-single') {
+        singleInput.value = sampleCode;
+        singleInput.dispatchEvent(new Event('input', { bubbles: true }));
+      } else {
+        fillSegmented(sampleCode);
+        verifyCode(sampleCode, 'Segmented Simulation');
+      }
+    }
+
+    /* Copy to clipboard */
+    function copyText(elementId, btn) {
+      const el = document.getElementById(elementId);
+      const text = el.innerText || el.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.remove('btn-outline-primary');
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-outline-primary');
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
+
